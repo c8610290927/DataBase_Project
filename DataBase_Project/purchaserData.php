@@ -54,7 +54,7 @@
             
             <div class="form-group row">
                 
-                <div class="col-xs-12 col-md-6 col-lg-6" id="member">
+                <div class="col-xs-12 col-md-6 col-lg-12" id="member">
             
                     <table class="table table-hover" id="memberTable">
                       <thead class="thead-dark">
