@@ -72,13 +72,30 @@
                           <th scope="col">姓名</th>
                           <th scope="col">聯絡電話</th>
                         </tr>
-                        <tr>
-                            <td scope="col">01</th>
-                            <td scope="col">班級a</td>
-                            <td scope="col">學號b</td>
-                            <td scope="col">姓名c</td>
-                            <td scope="col">聯絡電話d</td>
-                          </tr>
+                        <?php
+                            include "db_finalproject_conn.php";
+                          
+                            $query = ("select * from Memberinfo");
+                            $stmt =  $db->query($query);
+                            $result = $stmt->fetchAll();
+                            for($i=0; !empty($result[$i]); $i++)
+                            {
+                              for($j=0;!empty($result[$i]); $j++)
+                              {
+                                if($result[$j][0] == $i+1)
+                                {
+                                  echo"<tr>";
+                                  echo "<td scope='col'>".$result[$j][0]."</td>";
+                                  echo "<td scope='col'>".$result[$j][1]."</td>";
+                                  echo "<td scope='col'>".$result[$j][2]."</td>";
+                                  echo "<td scope='col'>".$result[$j][3]."</td>";                              
+                                  echo "<td scope='col'>".$result[$j][4]."</td>";
+                                  echo "</tr>";
+                                  break;
+                                }
+                              }
+                            }
+                        ?>
                       </thead>
                      
                     </table>
