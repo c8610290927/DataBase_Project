@@ -1,3 +1,26 @@
+<?php
+   include("db_finalproject_conn.php");
+   session_start();
+   $error = "";
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      
+      $myusername = $_POST['username'];
+      $mypassword = $_POST['password']; 
+      $query = ("select * FROM memberinfo WHERE Account = '$myusername' and password = '$mypassword'");
+	  $stmt = $db->query($query);
+	  $result = $stmt->fetchAll();  
+      
+      // If result matched $myusername and $mypassword, table row must be 1 row
+		
+      if(!empty($result[0])) {
+         $_SESSION['login_user'] = $myusername;
+		 header("location: bookData.php");
+      }else {
+         $error = "Your UserName or Password is invalid";
+      }
+   }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,42 +50,35 @@
 									<h3 class="mb-0">登入(Login)</h3>
 								</div>
 								
-								<div class="card-body">
-                                    <div class="form-group">
-                                        <label for="uname1">帳號(Username)</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="account" id="uname1" >
-                                    </div>
-                                    <div class="form-group">
-                                        <label>密碼(Password)</label>
-                                        <input type="password" class="form-control form-control-lg rounded-0" name="password" id="pwd1">
-                                    </div>
-
-
-                                    <input type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">
-
-                                        <div>
-                                            <p class=error style="color:red"><strong>Error:</strong> 
-                                        </div>
-									
+								<form action = "" method = "post">
+									<div class="card-body">
+										<div class="form-group">
+											<label for="uname1">帳號(Username)</label>
+											<input type="text" class="form-control form-control-lg rounded-0" name="username" id="uname1" >
+										</div>
+										<div class="form-group">
+											<label>密碼(Password)</label>
+											<input type="password" class="form-control form-control-lg rounded-0" name="password" id="pwd1">
+										</div>
+										<input type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">
+									</div>
+								</form>
+								<div style = "font-size:11px; color:#cc0000; margin-top:10px">
+									<?php
+										echo $error; 
+									?>
 								</div>
-								<!--/card-block-->
 							</div>
-							<!-- /form card login -->
 
 						</div>
 
-
 					</div>
-					<!--/row-->
 
 				</div>
-				<!--/col-->
-			</div>
-			<!--/row-->
-		</div>
-		<!--/container-->
 
-	   
+			</div>
+
+		</div>	   
 
 	</body>
 </html>
