@@ -29,15 +29,15 @@
 				
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
-					<li class="nav-item"><a class = "nav-link" href="{{url_for('member_information')}}">會員資訊</a></li>
-					<li class="nav-item"><a class = "nav-link" href="{{url_for('book_information')}}">訂購書籍資訊</a></li>
+					<li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
+					<li class="nav-item"><a class = "nav-link" href="bookData.php">訂購書籍資訊</a></li>
                     
                     
 					<li class="dropdown">
 						<a class="nav-link dropdown-toggle active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="{{url_for('change_password')}}">修改密碼</a>
+						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
 						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
 						</div>
 					</li>
