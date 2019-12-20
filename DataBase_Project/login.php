@@ -14,8 +14,9 @@
       // If result matched $myusername and $mypassword, table row must be 1 row
 		
       if(!empty($result[0])) {
-         $_SESSION['login_user'] = $myusername;
+         $_SESSION['username'] = $myusername;
 		 header("location: bookData.php");
+		 echo  $_SESSION['username'];
       }else {
          $error = "Your UserName or Password is invalid";
       }

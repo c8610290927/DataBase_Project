@@ -1,4 +1,36 @@
 <!DOCTYPE html>
+<?php
+    include("db_finalproject_conn.php");
+    session_start();
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        // username and password sent from form 
+        
+        $myusername = $_SESSION['username'];
+        $mypassword = $_POST['oldpwd']; 
+        $newpassword1 = $_POST['newpwd1'];
+        $newpassword2 = $_POST['newpwd2'];
+        $query = ("select * FROM memberinfo WHERE Account = '$myusername' and password = '$mypassword'");
+        $stmt = $db->query($query);
+        $result = $stmt->fetchAll();  
+        
+        // If result matched $myusername and $mypassword, table row must be 1 row
+          
+        if(!empty($result[0])) {
+            if($newpassword1 == $newpassword2)
+            {                
+                $query = ("update memberinfo SET  Password = '$newpassword1' WHERE account = '$myusername' and password = '$mypassword'");
+                $stmt = $db->query($query);
+                $error = "成功修改!";
+            }
+            else
+            {
+                $error = "你的兩個密碼不符合!";
+            }
+        }else {
+           $error = "舊密碼不正確";
+        }
+     }
+?>
 <html lang="en">
 
 	<head>
@@ -44,57 +76,49 @@
 	    </nav>
 			
 		<div>
-            <div class="alert alert-danger" role="alert"><strong>Error:</strong> {{ error }}</div>
-
-            <div class="alert alert-success" role="alert"><strong>Success:</strong> {{ success }}</div>
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6 mx-auto">
 
-                            <!-- form card login -->
                             <div class="card rounded-0">
                                 <div class="card-header">
                                     <h3 class="mb-0">修改密碼(Change Password)</h3>
                                 </div>
-                                <div class="card-body">
-                                    <!--<form class="form" role="form" id="formLogin">-->
+                                <form action = "" method = "post">
+                                    <div class="card-body">
                                         <div class="form-group">
                                             <label for="uname1">舊密碼(Current Password)</label>
-                                            <input type="text" class="form-control form-control-lg rounded-0" name="uname1" id="uname1" required>
+                                            <input type="text" class="form-control form-control-lg rounded-0" name="oldpwd" id="uname1" required>
                                         </div>
                                         <div class="form-group">
                                             <label>新密碼(New Password)</label>
-                                            <input type="password" class="form-control form-control-lg rounded-0" id="pwd1" required>
+                                            <input type="password" class="form-control form-control-lg rounded-0" name= "newpwd1" id="pwd1" required>
                                         </div>
                                         <div class="form-group">
                                             <label>新密碼確認(Confirm Password)</label>
-                                            <input type="password" class="form-control form-control-lg rounded-0" id="pwd2" required>
+                                            <input type="password" class="form-control form-control-lg rounded-0" name= "newpwd2" id="pwd2" required>
                                         </div>
-                                        <button type="button" class="btn btn-success btn-lg float-right" id="btnSave">確認</button>
-                                            <div>
-                                                <p class=error style="color:red"><strong>Error:</strong> {{ error }}
-                                            </div>
-                                        <p class=error style="color:red" id="error">
-                                    <!--</form>-->
-                                </div>
-                                <!--/card-block-->
+                                        <input type="submit" class="btn btn-success btn-lg float-right" id="btnSave">確認</button>
+                                    </div>
+                                </form>
+                                <div style = "font-size:11px; color:#cc0000; margin-top:10px">
+									<?php
+										echo $error; 
+									?>
+								</div>
                             </div>
-                            <!-- /form card login -->
 
                         </div>
 
 
                     </div>
-                    <!--/row-->
 
                 </div>
-                <!--/col-->
+
             </div>
-            <!--/row-->
+
         </div>
-		<!--/container-->
 
 	</body>
 </html>
