@@ -74,13 +74,17 @@
                             <td scope="col">00878787</td>
                             <td scope="col">0987-987-987</td>
                             <td scope="col">2</td>
-                            <td scope="col">口</td>
+                            <td scope="col">
+                              <input type="checkbox">
+                            </td>
                           </tr>
                       </thead>
                      
                     </table>
                     
-                    <button type="button" class="btn btn-secondary" id="modify">新增資料</button>
+                    <button type="button" class="btn btn-secondary" id="add">新增資料</button>
+                    <button type="button" class="btn btn-secondary" id="modify">修改資料</button>
+                    <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>
                 </div>
             </div>
 
