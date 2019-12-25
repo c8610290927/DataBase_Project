@@ -56,7 +56,7 @@
                 <h1>會員資訊</h1>
             </div>
 
-			<button type="button" class="btn btn-secondary" id="modify">修改資料</button>
+			<button type="button" class="btn btn-secondary" id="modify"><a href="memberData_edit.php" style="color:white">修改資料</a></button>
 		
             
             <div class="form-group row">

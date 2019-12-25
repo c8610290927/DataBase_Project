@@ -63,6 +63,7 @@
                           <th scope="col">出版社</th>
                           <th scope="col">價錢</th>
                           <th scope="col">訂購班級</th>
+                          <th scope="col">訂購狀況</th>
                         </tr>
                           <?php
                             include "db_finalproject_conn.php";
@@ -80,6 +81,7 @@
                               echo "<td scope='col'>".$result[$i][4]."</td>";
                               echo "<td scope='col'>".$result[$i][5]."</td>";
                               echo "<td scope='col'>".$result[$i][6]."</td>";
+                              echo "<td scope='col'><button type='button' class='btn btn-secondary'><a href='purchaserData.php' style='color:white'>查看</a></button></td>";
                               echo "</tr>";
                             }
                           ?>
@@ -88,7 +90,7 @@
                     </table>
                     
                     <button type="button" class="btn btn-secondary" id="add">新增資料</button>
-                    <button type="button" class="btn btn-secondary" id="modify">修改資料</button>
+                    <button type="button" class="btn btn-secondary" id="modify"><a href="bookData_edit.php" style="color:white">修改資料</a></button>
                     <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>
                 </div>
             </div>

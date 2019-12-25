@@ -83,7 +83,7 @@
                     </table>
                     
                     <button type="button" class="btn btn-secondary" id="add">新增資料</button>
-                    <button type="button" class="btn btn-secondary" id="modify">修改資料</button>
+                    <button type="button" class="btn btn-secondary" id="modify"><a href="purchaserData_edit.php" style="color:white">修改資料</a></button>
                     <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>
                 </div>
             </div>
