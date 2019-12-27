@@ -56,8 +56,6 @@
                 <h1>會員資訊</h1>
             </div>
 
-			<button type="button" class="btn btn-secondary" id="modify"><a href="memberData_edit.php" style="color:white">修改資料</a></button>
-		
             
             <div class="form-group row">
                 
@@ -71,6 +69,7 @@
                           <th scope="col">學號</th>
                           <th scope="col">姓名</th>
                           <th scope="col">聯絡電話</th>
+                          <th scope="col">編輯</th>
                         </tr>
                         <?php
                             include "db_finalproject_conn.php";
@@ -90,6 +89,7 @@
                                   echo "<td scope='col'>".$result[$j][2]."</td>";
                                   echo "<td scope='col'>".$result[$j][3]."</td>";                              
                                   echo "<td scope='col'>".$result[$j][4]."</td>";
+                                  echo "<td scope='col'><button type='button' class='btn btn-secondary'><a href='memberData_edit.php' style='color:white'>修改</a></button></td>";
                                   echo "</tr>";
                                   break;
                                 }

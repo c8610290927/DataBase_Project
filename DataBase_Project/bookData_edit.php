@@ -46,7 +46,7 @@
 		<div class="container">
 			
             <div class="intro-text my-4">  
-                <h1>訂購書籍資訊-修改</h1>
+                <h1>訂購書籍資訊-新增修改</h1>
             </div>
 		
             
@@ -66,25 +66,25 @@
                           <th scope="col">訂購班級</th>
                         </tr>
                         <tr>
-                            <td scope="col">
+                            <td scope="row">
                                 <input type="text" id="num">
                             </td>
-                            <td scope="col">
+                            <td>
                                 <input type="text" id="bookName">
                             </td>
-                            <td scope="col">
+                            <td>
                                 <input type="text" id="version">
                             </td>
-                            <td scope="col">
+                            <td>
                                 <input type="text" id="writer">
                             </td>
-                            <td scope="col">
+                            <td>
                                 <input type="text" id="publish">
                             </td>
-                            <td scope="col">
+                            <td>
                                 <input type="text" id="price">
                             </td>
-                            <td scope="col">
+                            <td>
                                 <input type="text" id="class">
                             </td>
                           </tr>

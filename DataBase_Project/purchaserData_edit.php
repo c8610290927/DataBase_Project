@@ -48,7 +48,7 @@
 		<div class="container">
 			
             <div class="intro-text my-4">  
-                <h1>購書者資訊-修改</h1>
+                <h1>購書者資訊-新增修改</h1>
             </div>
 		
             
