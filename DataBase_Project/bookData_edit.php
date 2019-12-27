@@ -52,46 +52,47 @@
             
             <div class="form-group row">
                 
-                <div class="col-xs-12 col-md-6 col-lg-6" id="member">
-            
-                    <table class="table table-hover" id="memberTable">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col" >編號</th>
-                          <th scope="col">書名</th>
-                          <th scope="col">版本</th>
-                          <th scope="col">作者</th>
-                          <th scope="col">出版社</th>
-                          <th scope="col">價錢</th>
-                          <th scope="col">訂購班級</th>
-                        </tr>
-                        <tr>
-                            <td scope="col">
-                                <input type="text" id="num">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="bookName">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="version">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="writer">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="publish">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="price">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="class">
-                            </td>
+                  <div class="table-responsive" id="member">
+                      
+                      <table class="table table-hover" id="memberTable">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col" >編號</th>
+                            <th scope="col">書名</th>
+                            <th scope="col">版本</th>
+                            <th scope="col">作者</th>
+                            <th scope="col">出版社</th>
+                            <th scope="col">價錢</th>
+                            <th scope="col">訂購班級</th>
                           </tr>
-                      </thead>
-                     
-                    </table>
-                  </div>  
+                          <tr>
+                              <td scope="row">
+                                  <input type="text" id="num">
+                              </td>
+                              <td scope="col">
+                                  <input type="text" id="bookName">
+                              </td>
+                              <td scope="col">
+                                  <input type="text" id="version">
+                              </td>
+                              <td scope="col">
+                                  <input type="text" id="writer">
+                              </td>
+                              <td scope="col">
+                                  <input type="text" id="publish">
+                              </td>
+                              <td scope="col">
+                                  <input type="text" id="price">
+                              </td>
+                              <td scope="col">
+                                  <input type="text" id="class">
+                              </td>
+                            </tr>
+                        </thead>
+                      
+                      </table>
+                      
+                  </div>    
                 <button type="button" class="btn btn-secondary" id="save">儲存</button>
                 
             </div>

@@ -26,15 +26,15 @@
 				
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
-					<li class="nav-item"><a class = "nav-link" href="member_information.html">會員資訊</a></li>
-					<li class="nav-item"><a class = "nav-link" href="book_information.html">訂購書籍資訊</a></li>          
+					<li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
+					<li class="nav-item"><a class = "nav-link" href="bookData.php">訂購書籍資訊</a></li>          
                     
 					<li class="dropdown">
 						<a class="nav-link dropdown-toggle active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<img src="https://fashion.jedi.net.tw/images/user.png" width=30 height=30>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="login.html">登入</a>
+						  <a class="dropdown-item" href="login.php">登入</a>
 						</div>
 					</li>
 				  </ul>
