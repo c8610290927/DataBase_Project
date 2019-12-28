@@ -3,7 +3,7 @@
    $error = "";
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form 
-      $temp = $_GET['Dept'];      
+      $temp = $_GET['Dept'];
       $myNo = $_POST['No'];
       $myStudentName = $_POST['StudentName']; 
       $myStudentID = $_POST['StudentID'];
