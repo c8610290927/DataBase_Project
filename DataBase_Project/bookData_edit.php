@@ -76,7 +76,7 @@
 				
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
-            <li class="nav-item"><a class = "nav-link" href="member_information.html">會員資訊</a></li>
+            <li class="nav-item"><a class = "nav-link" href="member_information.php">會員資訊</a></li>
             <li class="nav-item"><a class = "nav-link" onclick="changePage()">訂購書籍資訊</a></li>         
                     
 					<li class="dropdown">
