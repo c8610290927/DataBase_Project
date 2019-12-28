@@ -166,16 +166,11 @@
                   </div>    
                 
             </div>
-<<<<<<< HEAD
-            
-
-=======
         <script>
             function changePage()
             {
               location.href="bookData.php?value=read";
             }
         </script>
->>>>>>> 74223b5840474fbed13aa6c6dfe6782ce55d3f64
 	</body>
 </html>

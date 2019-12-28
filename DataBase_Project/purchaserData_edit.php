@@ -47,8 +47,14 @@
       }
       $query = ("update purchaserinfo SET  No = '$myNo' ,Name = '$myStudentName',StudentID = '$myStudentID'
       ,PhoneNum = '$myPhoneNum' ,Quantity = '$myQuality',PaymentStatus = '$myPaymentStatus'WHERE StudentID = '$temp'");
-	    $stmt = $db->query($query);
+      $stmt = $db->query($query);
+      $stmt->execute();
     } 
+    else
+    {
+      $query = "insert into purchaserinfo values ('$myNo','$myOrderID','$myStudentName','$myStudentID','$myPhoneNum','$myQuality','$myPaymentStatus')";
+	    $stmt = $db->prepare($query);
+    }
   }
 ?>
 <!DOCTYPE html>

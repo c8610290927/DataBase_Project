@@ -102,7 +102,7 @@
                      
                     </table>
                     
-                    <button type="button" class="btn btn-secondary" id="add"><a href="purchaserData_edit.php" style="color:white">新增資料</a></button>
+                    <button type="button" class="btn btn-secondary" onclick = addData() id="add"><a style="color:white">新增資料</a></button>
                     <!--<button type="button" class="btn btn-secondary" id="modify"><a href="book_information_edit.html" style="color:white">修改資料</a></button>
                     <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>-->
                 </div>
@@ -118,6 +118,10 @@
               i = i * 2;
               var value = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(3)").text();
               location.href="purchaserData_edit.php?value=" +value;
+            }
+            function addData()
+            {
+              location.href="purchaserData_edit.php?value=add";
             }
         </script>
 	</body>
