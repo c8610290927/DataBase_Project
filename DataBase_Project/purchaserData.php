@@ -24,7 +24,7 @@
 
 	  	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="mainNav">
 			<div class="container">
-				  <a class="navbar-brand" href="{{url_for('manager_index')}}">海大班級訂書系統</a>
+				  <a class="navbar-brand" href="index.php">海大班級訂書系統</a>
 				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				  </button>
@@ -32,11 +32,12 @@
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
 					<li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
-					<li class="nav-item"><a class = "nav-link" href="bookData.php">訂購書籍資訊</a></li>
+					<li class="nav-item"><a class = "nav-link" onclick="changePage()">訂購書籍資訊</a></li>
                     
                     
 					<li class="dropdown">
-						<a class="nav-link dropdown-toggle active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a class="nav-link active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="https://fashion.jedi.net.tw/images/user.png" width=30 height=30>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
@@ -75,30 +76,49 @@
                           <th scope="col">繳款狀況</th>
                           <th scope="col">編輯</th>
                         </tr>
-                        <tr>
-                            <td scope="col">87</td>
-                            <td scope="col">資工2A</td>
-                            <td scope="col">大笨蛋</td>
-                            <td scope="col">00878787</td>
-                            <td scope="col">0987-987-987</td>
-                            <td scope="col">2</td>
-                            <td scope="col">
-                              <input type="checkbox">
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-secondary" id="modify"><a href="purchaserData_edit.html" style="color:white">修改</a></button>
-                              <button type="button" class="btn btn-secondary" id="delete"><a href=# style="color:white">刪除</a></button>
-                            </td>
-                          </tr>
+                        <?php
+                            include "db_finalproject_conn.php";
+                          
+                            $query = ("select * from PurchaserInfo");
+                            $stmt =  $db->query($query);
+                            $result = $stmt->fetchAll();
+                            for($i=0; !empty($result[$i]); $i++)
+                            {
+                              echo "<form method='post' action=''>"; 
+                              echo "<tr>";
+                              echo "<td scope='col'>".$result[$i][0]."</td>";
+                              echo "<td scope='col'>".$result[$i][1]."</td>";
+                              echo "<td scope='col'>".$result[$i][2]."</td>";
+                              echo "<td scope='col'>".$result[$i][3]."</td>";                              
+                              echo "<td scope='col'>".$result[$i][4]."</td>";
+                              echo "<td scope='col'>".$result[$i][5]."</td>";
+                              echo "<td scope='col'>".$result[$i][6]."</td>";
+                              echo "<td scope='col'><button type='button' class='btn btn-secondary'id = 'modify' onclick = 'modifyData(".$i.")'><a style='color:white'>修改</a></button>";
+                              echo "</tr>";
+                              echo "</form>";
+                            }
+                          ?>
                       </thead>
                      
                     </table>
                     
-                    <button type="button" class="btn btn-secondary" id="add"><a href="purchaserData_edit.html" style="color:white">新增資料</a></button>
+                    <button type="button" class="btn btn-secondary" id="add"><a href="purchaserData_edit.php" style="color:white">新增資料</a></button>
                     <!--<button type="button" class="btn btn-secondary" id="modify"><a href="book_information_edit.html" style="color:white">修改資料</a></button>
                     <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>-->
                 </div>
             </div>
-
+        <script>
+            function changePage()
+            {
+              location.href="bookData.php?value=read";
+            }
+            function modifyData(i)
+            {
+              i = i + 1;
+              i = i * 2;
+              var value = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(3)").text();
+              location.href="purchaserData_edit.php?value=" +value;
+            }
+        </script>
 	</body>
 </html>

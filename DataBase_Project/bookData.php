@@ -3,6 +3,8 @@
   $temp = $_GET['value'];  
   if($temp != "read")
   {
+    $query = ("delete from purchaserinfo WHERE OrderID =".$temp);
+    $stmt = $db->query($query);
     $query = ("delete from bookinfo WHERE OrderID =".$temp);
     $stmt = $db->query($query);
   }
@@ -23,7 +25,7 @@
 
 	  	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="mainNav">
 			<div class="container">
-				  <a class="navbar-brand" href="{{url_for('manager_index')}}">海大班級訂書系統</a>
+				  <a class="navbar-brand" href="index.php">海大班級訂書系統</a>
 				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				  </button>
@@ -31,7 +33,8 @@
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
 					<li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
-					<li class="nav-item"><a class = "nav-link" href="bookData.php">訂購書籍資訊</a></li>        
+					<li class="nav-item"><a class = "nav-link" onclick="changePage()">訂購書籍資訊</a></li>
+                    
                     
 					<li class="dropdown">
 						<a class="nav-link active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -94,7 +97,7 @@
                               echo "<td scope='col'>".$result[$i][6]."</td>";
                               echo "<td scope='col'><button type='button' class='btn btn-secondary'><a href='purchaserData.php' style='color:white'>查看</a></button></td>";
                               echo "<td scope='col'><button type='button' class='btn btn-secondary'id = 'modify' onclick = 'express(".$i.")'><a style='color:white'>修改</a></button>";
-                              echo "<button type='button' class='btn btn-secondary'><a style='color:white'>刪除</a></button></td>";
+                              echo "<button type='button' class='btn btn-secondary' onclick = del(".$i.")><a style='color:white'>刪除</a></button></td>";
                               echo "</tr>";
                               echo "</form>";
                             }
@@ -127,5 +130,10 @@
       var value = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(0)").text();
       location.href="bookData.php?value="+value;
     }
-  </script>
+          function changePage()
+          {
+            location.href="bookData.php?value=read";
+          }
+        </script>
+	</body>
 </html>

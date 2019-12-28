@@ -1,3 +1,56 @@
+<?php
+   include("db_finalproject_conn.php");
+   $error = "";
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      $temp = $_GET['value'];     
+      $myNo = $_POST['No'];  
+      $myOrderID = $_POST['Dept'];
+      $myStudentName = $_POST['StudentName'];
+      $myStudentID = $_POST['StudentID'];
+      $myPhoneNum = $_POST['PhoneNum'];
+      $myQuality = $_POST['Quality'];
+      $myPaymentStatus = $_POST['PaymentStatus'];
+    if($temp!= "add")
+    {
+      $myOrderID = $_GET['value'];
+      $query = ("select * from purchaserinfo where StudentID = '$temp'");
+      $stmt =  $db->query($query);
+      $result = $stmt->fetchAll();
+      if(!$myNo)
+      {
+        $myNo = $result[0][0];
+      }
+      if(!$myOrderID)
+      {
+        $myDept = $result[0][1];
+      }
+      if(!$myStudentName)
+      {
+        $myStudentName = $result[0][2];
+      }
+      if(!$myStudentID)
+      {
+        $myStudentID = $result[0][3];
+      }
+      if(!$myPhoneNum)
+      {
+        $myPhoneNum = $result[0][4];
+      }
+      if(!$myQuality)
+      {
+        $myQuality = $result[0][5];
+      }
+      if(!$myPaymentStatus)
+      {
+        $myPaymentStatus = $result[0][6];
+      }
+      $query = ("update purchaserinfo SET  No = '$myNo' ,Name = '$myStudentName',StudentID = '$myStudentID'
+      ,PhoneNum = '$myPhoneNum' ,Quantity = '$myQuality',PaymentStatus = '$myPaymentStatus'WHERE StudentID = '$temp'");
+	    $stmt = $db->query($query);
+    } 
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +70,7 @@
 
 	  	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="mainNav">
 			<div class="container">
-				  <a class="navbar-brand" href="{{url_for('manager_index')}}">海大班級訂書系統</a>
+				  <a class="navbar-brand" href="index.php">海大班級訂書系統</a>
 				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				  </button>
@@ -25,11 +78,12 @@
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
 					<li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
-					<li class="nav-item"><a class = "nav-link" href="bookData.php">訂購書籍資訊</a></li>
+					<li class="nav-item"><a class = "nav-link" onclick="changePage()">訂購書籍資訊</a></li>
                     
                     
 					<li class="dropdown">
-						<a class="nav-link dropdown-toggle active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a class="nav-link active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="https://fashion.jedi.net.tw/images/user.png" width=30 height=30>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
@@ -67,37 +121,58 @@
                           <th scope="col">數量</th>
                           <th scope="col">繳款狀況</th>
                         </tr>
-                        <tr>
-                            <td scope="col">
-                                <input type="text" id="num">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="class">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="name">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="stdNum">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="phone">
-                            </td>
-                            <td scope="col">
-                                <input type="text" id="number">
-                            </td>
-                            <td scope="col">
-                              <input type="checkbox" id="pay">
-                            </td>
-                          </tr>
+                        <?php
+                            include "db_finalproject_conn.php";
+                            $value = $_GET['value'];
+                            if($value!="add")
+                            {
+                              $query = ("select * from purchaserinfo where StudentID = '$value'");
+                              $stmt =  $db->query($query);
+                              $result = $stmt->fetchAll();
+                            }
+                            for($i=0; !empty($result[$i]); $i++)
+                            {
+                              echo "<form method = 'post' action = ''>";
+                              echo "<tr>";
+                              echo "<td scope='col'><input type = text name = 'No' placeholder = ".$result[$i][0]."></td>";
+                              echo "<td scope='col'><input type = text name = 'Dept' placeholder = ".$result[$i][1]."></td>";
+                              echo "<td scope='col'><input type = text name = 'StudentName' placeholder = ".$result[$i][2]."></td>";
+                              echo "<td scope='col'><input type = text name = 'StudentID' placeholder = ".$result[$i][3]."></td>";                              
+                              echo "<td scope='col'><input type = text name = 'PhoneNum' placeholder = ".$result[$i][4]."></td>";
+                              echo "<td scope='col'><input type = text name = 'Quality' placeholder = ".$result[$i][5]."></td>";
+                              echo "<td scope='col'><input type = text name = 'PaymentStatus' placeholder = ".$result[$i][6]."></td>";
+                              echo "<td scope='col'><input type='submit' class='btn btn-success btn-lg float-right' id='btnSave'</td>";                               
+                              echo "</tr>";                                                    
+                              echo "</form>";
+                            }
+                            if($value == "add")
+                            {
+                              echo "<form method = 'post' action = ''>";
+                              echo "<tr>";
+                              echo "<td scope='col'><input type = text name = 'No' ></td>";
+                              echo "<td scope='col'><input type = text name = 'Dept' ></td>";
+                              echo "<td scope='col'><input type = text name = 'StudentName' ></td>";
+                              echo "<td scope='col'><input type = text name = 'StudentID' ></td>";                              
+                              echo "<td scope='col'><input type = text name = 'PhoneNum' ></td>";
+                              echo "<td scope='col'><input type = text name = 'Quality' ></td>";
+                              echo "<td scope='col'><input type = text name = 'PaymentStatus' ></td>";
+                              echo "<td scope='col'><input type='submit' class='btn btn-success btn-lg float-right' id='btnSave'</td>";                               
+                              echo "</tr>";                                                    
+                              echo "</form>";
+                            }
+                          ?>
                       </thead>
                      
                     </table>
                     
-                    </div>
-                <button type="button" class="btn btn-secondary" id="save">儲存</button>
+                </div>
                 
             </div>
-
+        <script>
+            function changePage()
+            {
+              location.href="bookData.php?value=read";
+            }
+        </script>
 	</body>
 </html>
