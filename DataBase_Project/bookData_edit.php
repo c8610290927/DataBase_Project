@@ -1,3 +1,56 @@
+<?php
+   include("db_finalproject_conn.php");
+   $error = "";
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      $temp = $_GET['value'];      
+      $myOrderID = $_POST['OrderID'];
+      $myBookName = $_POST['BookName']; 
+      $myVersion = $_POST['version'];
+      $myAuthor = $_POST['author'];
+      $mySeller = $_POST['seller'];
+      $myPrice = $_POST['price'];
+      $myDept = $_POST['dept'];
+    if($temp!= "add")
+    {
+      $myOrderID = $_GET['value'];
+      $query = ("select * from bookinfo where OrderID = '$myOrderID'");
+      $stmt =  $db->query($query);
+      $result = $stmt->fetchAll();
+      if(!$myBookName)
+      {
+        $myBookName = $result[0][1];
+      }
+      if(!$myVersion)
+      {
+        $$myVersion = $result[0][2];
+      }
+      if(!$myAuthor)
+      {
+        $myAuthor = $result[0][3];
+      }
+      if(!$mySeller)
+      {
+        $mySeller = $result[0][4];
+      }
+      if(!$myPrice)
+      {
+        $myPrice = $result[0][5];
+      }
+      if(!$myDept)
+      {
+        $myDept = $result[0][6];
+      }
+      $query = ("update bookinfo SET  BookName = '$myBookName' ,Version = '$myVersion',Author = '$myAuthor',Seller = '$mySeller',Price = '$myPrice' WHERE OrderID = '$myOrderID'");
+	    $stmt = $db->query($query);
+    } 
+    else
+    {
+      $query = "insert into bookinfo values ('$myOrderID','$myBookName','$myVersion','$myAuthor','$mySeller','$myPrice','$myDept')";
+	    $stmt = $db->query($query);
+    }
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,14 +76,14 @@
 				
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
-            <li class="nav-item"><a class = "nav-link" href="member_information.html">會員資訊</a></li>
-            <li class="nav-item"><a class = "nav-link" href="book_information.html">訂購書籍資訊</a></li>         
+            <li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
+            <li class="nav-item"><a class = "nav-link" href="bookData.php">訂購書籍資訊</a></li>         
                     
 					<li class="dropdown">
 						<a class="nav-link dropdown-toggle active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="change_password.html">修改密碼</a>
+						  <a class="dropdown-item" href="change_password.php">修改密碼</a>
 						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
 						</div>
 					</li>
@@ -46,56 +99,73 @@
 		<div class="container">
 			
             <div class="intro-text my-4">  
-                <h1>訂購書籍資訊-修改</h1>
+                <h1>訂購書籍資訊-新增修改</h1>
             </div>
 		
             
             <div class="form-group row">
                 
-                  <div class="table-responsive" id="member">
-                      
-                      <table class="table table-hover" id="memberTable">
-                        <thead class="thead-dark">
-                          <tr>
-                            <th scope="col" >編號</th>
-                            <th scope="col">書名</th>
-                            <th scope="col">版本</th>
-                            <th scope="col">作者</th>
-                            <th scope="col">出版社</th>
-                            <th scope="col">價錢</th>
-                            <th scope="col">訂購班級</th>
-                          </tr>
-                          <tr>
-                              <td scope="row">
-                                  <input type="text" id="num">
-                              </td>
-                              <td scope="col">
-                                  <input type="text" id="bookName">
-                              </td>
-                              <td scope="col">
-                                  <input type="text" id="version">
-                              </td>
-                              <td scope="col">
-                                  <input type="text" id="writer">
-                              </td>
-                              <td scope="col">
-                                  <input type="text" id="publish">
-                              </td>
-                              <td scope="col">
-                                  <input type="text" id="price">
-                              </td>
-                              <td scope="col">
-                                  <input type="text" id="class">
-                              </td>
-                            </tr>
+                <div class="col-xs-12 col-md-6 col-lg-6" id="member">
+            
+                    <table class="table table-hover" id="memberTable">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col" >編號</th>
+                          <th scope="col">書名</th>
+                          <th scope="col">版本</th>
+                          <th scope="col">作者</th>
+                          <th scope="col">出版社</th>
+                          <th scope="col">價錢</th>
+                          <th scope="col">訂購班級</th>
+                        </tr>
+                        <?php
+                            include "db_finalproject_conn.php";
+                            $value = $_GET['value'];
+                            if($value!="add")
+                            {
+                              $query = ("select * from bookinfo where OrderID = '$value'");
+                              $stmt =  $db->query($query);
+                              $result = $stmt->fetchAll();
+                            }
+                            for($i=0; !empty($result[$i]); $i++)
+                            {
+                              echo "<form method = 'post' action = ''>";
+                              echo "<tr>";
+                              echo "<td scope='col'><input type = text name = 'OrderID' placeholder = ".$result[$i][0]."></td>";
+                              echo "<td scope='col'><input type = text name = 'BookName' placeholder = ".$result[$i][1]."></td>";
+                              echo "<td scope='col'><input type = text name = 'version' placeholder = ".$result[$i][2]."></td>";
+                              echo "<td scope='col'><input type = text name = 'author' placeholder = ".$result[$i][3]."></td>";                              
+                              echo "<td scope='col'><input type = text name = 'seller' placeholder = ".$result[$i][4]."></td>";
+                              echo "<td scope='col'><input type = text name = 'price' placeholder = ".$result[$i][5]."></td>";
+                              echo "<td scope='col'><input type = text name = 'dept' placeholder = ".$result[$i][6]."></td>";
+                              echo "<td scope='col'><input type='submit' class='btn btn-success btn-lg float-right' id='btnSave'</td>";                               
+                              echo "</tr>";                                                    
+                              echo "</form>";
+                            }
+                            if($value == "add")
+                            {
+                              echo "<form method = 'post' action = ''>";
+                              echo "<tr>";
+                              echo "<td scope='col'><input type = text name = 'OrderID' ></td>";
+                              echo "<td scope='col'><input type = text name = 'BookName' ></td>";
+                              echo "<td scope='col'><input type = text name = 'version' ></td>";
+                              echo "<td scope='col'><input type = text name = 'author' ></td>";                              
+                              echo "<td scope='col'><input type = text name = 'seller' ></td>";
+                              echo "<td scope='col'><input type = text name = 'price' ></td>";
+                              echo "<td scope='col'><input type = text name = 'dept' ></td>";
+                              echo "<td scope='col'><input type='submit' class='btn btn-success btn-lg float-right' id='btnSave'</td>";                               
+                              echo "</tr>";                                                    
+                              echo "</form>";
+                            }
+                          ?>
                         </thead>
                       
                       </table>
                       
                   </div>    
-                <button type="button" class="btn btn-secondary" id="save">儲存</button>
                 
             </div>
+            
 
 	</body>
 </html>

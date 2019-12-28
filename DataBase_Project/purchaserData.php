@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<?php
+  if($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo "AAAAAA";
+    echo $_POST['val1'];
+  }
+?>
 <html lang="en">
 
 	<head>
@@ -66,6 +73,7 @@
                           <th scope="col">聯絡電話</th>
                           <th scope="col">數量</th>
                           <th scope="col">繳款狀況</th>
+                          <th scope="col">編輯</th>
                         </tr>
                         <tr>
                             <td scope="col">87</td>
@@ -77,14 +85,18 @@
                             <td scope="col">
                               <input type="checkbox">
                             </td>
+                            <td>
+                              <button type="button" class="btn btn-secondary" id="modify"><a href="purchaserData_edit.html" style="color:white">修改</a></button>
+                              <button type="button" class="btn btn-secondary" id="delete"><a href=# style="color:white">刪除</a></button>
+                            </td>
                           </tr>
                       </thead>
                      
                     </table>
                     
-                    <button type="button" class="btn btn-secondary" id="add">新增資料</button>
-                    <button type="button" class="btn btn-secondary" id="modify"><a href="purchaserData_edit.php" style="color:white">修改資料</a></button>
-                    <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>
+                    <button type="button" class="btn btn-secondary" id="add"><a href="purchaserData_edit.html" style="color:white">新增資料</a></button>
+                    <!--<button type="button" class="btn btn-secondary" id="modify"><a href="book_information_edit.html" style="color:white">修改資料</a></button>
+                    <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>-->
                 </div>
             </div>
 

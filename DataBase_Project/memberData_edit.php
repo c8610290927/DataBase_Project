@@ -1,3 +1,36 @@
+<?php
+   include("db_finalproject_conn.php");
+   $error = "";
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      $temp = $_GET['Dept'];      
+      $myNo = $_POST['No'];
+      $myStudentName = $_POST['StudentName']; 
+      $myStudentID = $_POST['StudentID'];
+      $myPhoneNum = $_POST['PhoneNum'];
+      $query = ("select * from memberinfo where Dept = '$temp'");
+      $stmt =  $db->query($query);
+      $result = $stmt->fetchAll();
+      if(!$myNo)
+      {
+        $myNo = $result[0][0];
+      }
+      if(!$myStudentName)
+      {
+        $myStudentName = $result[0][3];
+      }
+      if(!$myStudentID)
+      {
+        $myStudentID = $result[0][2];
+      }
+      if(!$myPhoneNum)
+      {
+        $myPhoneNum = $result[0][4];
+      }
+      $query = ("update memberinfo SET  No = '$myNo' ,StudentName = '$myStudentName',StudentID = '$myStudentID',PhoneNum = '$myPhoneNum' where Dept='$temp'");
+	    $stmt = $db->query($query);
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,28 +102,30 @@
                           <th scope="col">姓名</th>
                           <th scope="col">聯絡電話</th>
                         </tr>
-                        <tr>
-                            <td scope="row">
-                                <input type="text" id="num">
-                            </td>
-                            <td>
-                                <input type="text" id="class">
-                            </td>
-                            <td>
-                                <input type="text" id="stdNum">
-                            </td>
-                            <td>
-                                <input type="text" id="name">
-                            </td>
-                            <td>
-                                <input type="text" id="phone">
-                            </td>
-                          </tr>
+                        <?php
+                            include "db_finalproject_conn.php";
+                            $Dept = $_GET['Dept'];
+                            $query = ("select * from memberinfo where Dept = '$Dept'");
+                            $stmt =  $db->query($query);
+                            $result = $stmt->fetchAll();
+                            for($i=0; !empty($result[$i]); $i++)
+                            {
+                              echo "<form method = 'post' action = ''>";
+                              echo "<tr>";
+                              echo "<td scope='col'><input type = text name = 'No' placeholder = ".$result[$i][0]."></td>";
+                              echo "<td scope='col'><input type = text name = 'Dept' placeholder = ".$result[$i][1]."></td>";
+                              echo "<td scope='col'><input type = text name = 'StudentID' placeholder = ".$result[$i][2]."></td>";
+                              echo "<td scope='col'><input type = text name = 'StudentName' placeholder = ".$result[$i][3]."></td>";                              
+                              echo "<td scope='col'><input type = text name = 'PhoneNum' placeholder = ".$result[$i][4]."></td>";
+                              echo "<td scope='col'><input type='submit' class='btn btn-success btn-lg float-right' id='btnSave'</td>";                               
+                              echo "</tr>";                                                    
+                              echo "</form>";
+                            }
+                        ?>
                       </thead>
                      
                     </table>
                 </div>
-                <button type="button" class="btn btn-secondary" id="save">儲存</button>
             </div>
 
 	</body>

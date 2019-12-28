@@ -1,3 +1,12 @@
+<?php
+  include("db_finalproject_conn.php");
+  $temp = $_GET['value'];  
+  if($temp != "read")
+  {
+    $query = ("delete from bookinfo WHERE OrderID =".$temp);
+    $stmt = $db->query($query);
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,11 +31,11 @@
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
 					<li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
-					<li class="nav-item"><a class = "nav-link" href="bookData.php">訂購書籍資訊</a></li>
-                    
+					<li class="nav-item"><a class = "nav-link" href="bookData.php">訂購書籍資訊</a></li>        
                     
 					<li class="dropdown">
-						<a class="nav-link dropdown-toggle active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a class="nav-link active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="https://fashion.jedi.net.tw/images/user.png" width=30 height=30>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
@@ -51,7 +60,7 @@
             
             <div class="form-group row">
                 
-                <div class="col-xs-12 col-md-6 col-lg-6" id="member">
+                <div class="col-xs-12 col-md-6 col-lg-12" id="member">
             
                     <table class="table table-hover" id="memberTable">
                       <thead class="thead-dark">
@@ -64,6 +73,7 @@
                           <th scope="col">價錢</th>
                           <th scope="col">訂購班級</th>
                           <th scope="col">訂購狀況</th>
+                          <th scope="col">編輯</th>
                         </tr>
                           <?php
                             include "db_finalproject_conn.php";
@@ -73,7 +83,8 @@
                             $result = $stmt->fetchAll();
                             for($i=0; !empty($result[$i]); $i++)
                             {
-                              echo"<tr>";
+                              echo "<form method='post' action=''>"; 
+                              echo "<tr>";
                               echo "<td scope='col'>".$result[$i][0]."</td>";
                               echo "<td scope='col'>".$result[$i][1]."</td>";
                               echo "<td scope='col'>".$result[$i][2]."</td>";
@@ -82,18 +93,39 @@
                               echo "<td scope='col'>".$result[$i][5]."</td>";
                               echo "<td scope='col'>".$result[$i][6]."</td>";
                               echo "<td scope='col'><button type='button' class='btn btn-secondary'><a href='purchaserData.php' style='color:white'>查看</a></button></td>";
+                              echo "<td scope='col'><button type='button' class='btn btn-secondary'id = 'modify' onclick = 'express(".$i.")'><a style='color:white'>修改</a></button>";
+                              echo "<button type='button' class='btn btn-secondary'><a style='color:white'>刪除</a></button></td>";
                               echo "</tr>";
+                              echo "</form>";
                             }
                           ?>
                       </thead>
                      
                     </table>
                     
-                    <button type="button" class="btn btn-secondary" id="add">新增資料</button>
-                    <button type="button" class="btn btn-secondary" id="modify"><a href="bookData_edit.php" style="color:white">修改資料</a></button>
-                    <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>
+                    <button type="button" class="btn btn-secondary" id="add" onclick = "add()"><a style="color:white">新增資料</a></button>
+                    <!--<button type="button" class="btn btn-secondary" id="modify"><a href="book_information_edit.html" style="color:white">修改資料</a></button>
+                    <button type="button" class="btn btn-secondary" id="delete">刪除資料</button>-->
                 </div>
             </div>
-
-	</body>
+  </body>
+  <script>
+    function express(i){
+      i = i + 1;
+      i = i * 2;
+      var value = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(0)").text();
+      location.href="bookData_edit.php?value=" +value;
+    }
+    function add()
+    {
+      location.href="bookData_edit.php?value=add";
+    }
+    function del(i)
+    {
+      i = i + 1;
+      i = i * 2;
+      var value = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(0)").text();
+      location.href="bookData.php?value="+value;
+    }
+  </script>
 </html>
