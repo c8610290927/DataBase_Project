@@ -19,28 +19,28 @@
 		?>
 	  	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="mainNav">
 			<div class="container">
-				  <a class="navbar-brand" href="index.html">海大班級訂書系統</a>
+				  <a class="navbar-brand" href="index.php">海大班級訂書系統</a>
 				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				  </button>
 				
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
-					<li class="nav-item"><a class = "nav-link" href="member_information.html">會員資訊</a></li>
-					<li class="nav-item"><a class = "nav-link" href="book_information.html">訂購書籍資訊</a></li>          
+					<li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
+					<li class="nav-item"><a class = "nav-link" onclick="changePage()">訂購書籍資訊</a></li>          
                     
 					<li class="dropdown">
 						<a class="nav-link dropdown-toggle active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<img src="https://fashion.jedi.net.tw/images/user.png" width=30 height=30>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="login.html">登入</a>
+						  <a class="dropdown-item" href="login.php">登入</a>
 						</div>
 					</li>
 				  </ul>
 				</div>
 			</div>
 	    </nav>
-		<p align="center"><center>歡迎來到此系統，請由下拉式選單並於登入後進行操作</center></p>
+		<p align="center"><center>歡迎來到此系統，請由下拉式選單登入後進行操作</center></p>
 	</body>
 </html>
