@@ -23,7 +23,7 @@
 				
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
-            <li class="nav-item"><a class = "nav-link" href="member_information.html">會員資訊</a></li>
+            <li class="nav-item"><a class = "nav-link" href="member_information.php">會員資訊</a></li>
             <li class="nav-item"><a class = "nav-link" onclick="changePage()">訂購書籍資訊</a></li>         
                     
 					<li class="dropdown">
@@ -31,7 +31,7 @@
 						<img src="https://fashion.jedi.net.tw/images/user.png" width=30 height=30>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="change_password.html">修改密碼</a>
+						  <a class="dropdown-item" href="change_password.php">修改密碼</a>
 						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
 						</div>
 					</li>
