@@ -1,5 +1,6 @@
 <?php
   include("db_finalproject_conn.php");
+  session_start();
   $temp = $_GET['value'];  
   if($temp != "read")
   {
@@ -8,6 +9,16 @@
     $query = ("delete from bookinfo WHERE OrderID =".$temp);
     $stmt = $db->query($query);
   }
+  if(!isset($_SESSION['username']))
+  {
+    header("location: login.php");
+  }
+  if($_SERVER["REQUEST_METHOD"] == "POST") 
+  {
+		unset($_SESSION['username']);
+		session_destroy();
+		header("location: homepage.php");
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +36,7 @@
 
 	  	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="mainNav">
 			<div class="container">
-				  <a class="navbar-brand" href="index.php">海大班級訂書系統</a>
+				  <a class="navbar-brand" href="homepage.php">海大班級訂書系統</a>
 				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				  </button>
@@ -41,8 +52,10 @@
 						<img src="https://fashion.jedi.net.tw/images/user.png" width=30 height=30>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
-						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
+              <a class="dropdown-item" href="changePassword.php">修改密碼</a>
+              <form method = 'post' action = ''>
+              <input type = submit class = 'dropdown-item' value = 登出></input>
+              </form>
 						</div>
 					</li>
 				  </ul>
@@ -95,7 +108,7 @@
                               echo "<td scope='col'>".$result[$i][4]."</td>";
                               echo "<td scope='col'>".$result[$i][5]."</td>";
                               echo "<td scope='col'>".$result[$i][6]."</td>";
-                              echo "<td scope='col'><button type='button' class='btn btn-secondary'><a href='purchaserData.php' style='color:white'>查看</a></button></td>";
+                              echo "<td scope='col'><button type='button' class='btn btn-secondary' id = 'check' onclick = 'pi(".$i.")'><a style='color:white'>查看</a></button></td>";
                               echo "<td scope='col'><button type='button' class='btn btn-secondary'id = 'modify' onclick = 'express(".$i.")'><a style='color:white'>修改</a></button>";
                               echo "<button type='button' class='btn btn-secondary' onclick = del(".$i.")><a style='color:white'>刪除</a></button></td>";
                               echo "</tr>";
@@ -113,6 +126,13 @@
             </div>
   </body>
   <script>
+    function pi(i)
+    {
+      i = i + 1;
+      i = i * 2;
+      var value = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(0)").text();
+      location.href="purchaserData.php?value=" +value;
+    }
     function express(i){
       i = i + 1;
       i = i * 2;

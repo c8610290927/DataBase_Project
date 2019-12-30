@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 
 <?php
-  if($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "AAAAAA";
-    echo $_POST['val1'];
+  include "db_finalproject_conn.php";
+  $temp = $_GET['value']; 
+  session_start();
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		unset($_SESSION['username']);
+		session_destroy();
+		header("location: homepage.php");
+	}
+  if(!isset($_GET['value']))
+  {
+
+  }
+  else
+  {
+    if(isset($temp[1]))
+    {
+      $query = ("delete from purchaserinfo WHERE OrderID =".$temp[1]);
+      $stmt = $db->query($query);
+    }
   }
 ?>
 <html lang="en">
@@ -24,7 +40,7 @@
 
 	  	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="mainNav">
 			<div class="container">
-				  <a class="navbar-brand" href="index.php">海大班級訂書系統</a>
+				  <a class="navbar-brand" href="homepage.php">海大班級訂書系統</a>
 				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				  </button>
@@ -41,7 +57,9 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
-						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
+						  <form method = 'post' action = ''>
+              <input type = submit class = 'dropdown-item' value = 登出></input>
+              </form>
 						</div>
 					</li>
 				  </ul>
@@ -67,8 +85,8 @@
                     <table class="table table-hover" id="memberTable">
                       <thead class="thead-dark">
                         <tr>
-                          <th scope="col"> </th>
-                          <th scope="col">班級</th>
+                          <th scope="col">編號</th>
+                          <th scope="col">訂單編號</th>
                           <th scope="col">姓名</th>
                           <th scope="col">學號</th>
                           <th scope="col">聯絡電話</th>
@@ -78,8 +96,8 @@
                         </tr>
                         <?php
                             include "db_finalproject_conn.php";
-                          
-                            $query = ("select * from PurchaserInfo");
+                            $value = $_GET['value'];
+                            $query = ("select * from PurchaserInfo where OrderID = ".$value);
                             $stmt =  $db->query($query);
                             $result = $stmt->fetchAll();
                             for($i=0; !empty($result[$i]); $i++)
@@ -94,6 +112,7 @@
                               echo "<td scope='col'>".$result[$i][5]."</td>";
                               echo "<td scope='col'>".$result[$i][6]."</td>";
                               echo "<td scope='col'><button type='button' class='btn btn-secondary'id = 'modify' onclick = 'modifyData(".$i.")'><a style='color:white'>修改</a></button>";
+                              echo "<button type='button' class='btn btn-secondary' onclick = del(".$i.")><a style='color:white'>刪除</a></button></td>";
                               echo "</tr>";
                               echo "</form>";
                             }
@@ -122,6 +141,14 @@
             function addData()
             {
               location.href="purchaserData_edit.php?value=add";
+            }
+            function del(i)
+            {
+              i = i + 1;
+              i = i * 2;
+              var value = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(1)").text();
+              var no = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(0)").text();
+              location.href="purchaserData.php?value="+value+no;
             }
         </script>
 	</body>

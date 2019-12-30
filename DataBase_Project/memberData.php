@@ -1,3 +1,16 @@
+<?php
+  session_start(); 
+  if(!isset($_SESSION['username']))
+  {
+    header("location: login.php");
+  }
+  if($_SERVER["REQUEST_METHOD"] == "POST") 
+  {
+		unset($_SESSION['username']);
+		session_destroy();
+		header("location: homepage.php");
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +35,7 @@
 
 	  	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="mainNav">
 			<div class="container">
-				  <a class="navbar-brand" href="index.php">海大班級訂書系統</a>
+				  <a class="navbar-brand" href="homepage.php">海大班級訂書系統</a>
 				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				  </button>
@@ -39,7 +52,9 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
-						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
+						  <form method = 'post' action = ''>
+              <input type = submit class = 'dropdown-item' value = 登出></input>
+              </form>
 						</div>
 					</li>
 				  </ul>
@@ -108,7 +123,6 @@
       function express(i){
         i = i + 1;
         var value = $("#modify").closest("tr").parent().children(":eq("+i+")").children(":eq(1)").text();
-        alert(value);
         location.href="memberData_edit.php?Dept=" +value;
       }
             function changePage()

@@ -1,34 +1,45 @@
 <?php
    include("db_finalproject_conn.php");
+   session_start();
    $error = "";
    if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      $temp = $_GET['Dept'];
-      $myNo = $_POST['No'];
-      $myStudentName = $_POST['StudentName']; 
-      $myStudentID = $_POST['StudentID'];
-      $myPhoneNum = $_POST['PhoneNum'];
-      $query = ("select * from memberinfo where Dept = '$temp'");
-      $stmt =  $db->query($query);
-      $result = $stmt->fetchAll();
-      if(!$myNo)
+      // username and password sent from form
+      if(isset($_POST['No'])) 
       {
-        $myNo = $result[0][0];
+        $temp = $_GET['Dept'];
+        $myNo = $_POST['No'];
+        $myStudentName = $_POST['StudentName']; 
+        $myStudentID = $_POST['StudentID'];
+        $myPhoneNum = $_POST['PhoneNum'];
+        $query = ("select * from memberinfo where Dept = '$temp'");
+        $stmt =  $db->query($query);
+        $result = $stmt->fetchAll();
+        if(!$myNo)
+        {
+          $myNo = $result[0][0];
+        }
+        if(!$myStudentName)
+        {
+          $myStudentName = $result[0][3];
+        }
+        if(!$myStudentID)
+        {
+          $myStudentID = $result[0][2];
+        }
+        if(!$myPhoneNum)
+        {
+          $myPhoneNum = $result[0][4];
+        }
+        $query = ("update memberinfo SET  No = '$myNo' ,StudentName = '$myStudentName',StudentID = '$myStudentID',PhoneNum = '$myPhoneNum' where Dept='$temp'");
+        $stmt = $db->query($query);
+        header("location: memberData.php");
       }
-      if(!$myStudentName)
+      else
       {
-        $myStudentName = $result[0][3];
+        unset($_SESSION['username']);
+        session_destroy();
+        header("location: homepage.php");
       }
-      if(!$myStudentID)
-      {
-        $myStudentID = $result[0][2];
-      }
-      if(!$myPhoneNum)
-      {
-        $myPhoneNum = $result[0][4];
-      }
-      $query = ("update memberinfo SET  No = '$myNo' ,StudentName = '$myStudentName',StudentID = '$myStudentID',PhoneNum = '$myPhoneNum' where Dept='$temp'");
-	    $stmt = $db->query($query);
   }
 ?>
 <!DOCTYPE html>
@@ -71,7 +82,9 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
-						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
+						  <form method = 'post' action = ''>
+              <input type = submit class = 'dropdown-item' value = 登出></input>
+              </form>
 						</div>
 					</li>
 				  </ul>

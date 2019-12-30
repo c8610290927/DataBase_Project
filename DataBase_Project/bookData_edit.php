@@ -1,7 +1,16 @@
 <?php
    include("db_finalproject_conn.php");
    $error = "";
+   session_start();
    if($_SERVER["REQUEST_METHOD"] == "POST") {
+     if(!isset($_POST['OrderID']))
+     {
+      unset($_SESSION['username']);
+      session_destroy();
+      header("location: homepage.php");
+     }
+     else
+     {
       // username and password sent from form 
       $temp = $_GET['value'];      
       $myOrderID = $_POST['OrderID'];
@@ -11,44 +20,47 @@
       $mySeller = $_POST['seller'];
       $myPrice = $_POST['price'];
       $myDept = $_POST['dept'];
-    if($temp!= "add")
-    {
-      $myOrderID = $_GET['value'];
-      $query = ("select * from bookinfo where OrderID = '$myOrderID'");
-      $stmt =  $db->query($query);
-      $result = $stmt->fetchAll();
-      if(!$myBookName)
+      if($temp!= "add")
       {
-        $myBookName = $result[0][1];
-      }
-      if(!$myVersion)
+        $myOrderID = $_GET['value'];
+        $query = ("select * from bookinfo where OrderID = '$myOrderID'");
+        $stmt =  $db->query($query);
+        $result = $stmt->fetchAll();
+        if(!$myBookName)
+        {
+          $myBookName = $result[0][1];
+        }
+        if(!$myVersion)
+        {
+          $$myVersion = $result[0][2];
+        }
+        if(!$myAuthor)
+        {
+          $myAuthor = $result[0][3];
+        }
+        if(!$mySeller)
+        {
+          $mySeller = $result[0][4];
+        }
+        if(!$myPrice)
+        {
+          $myPrice = $result[0][5];
+        }
+        if(!$myDept)
+        {
+          $myDept = $result[0][6];
+        }
+        $query = ("update bookinfo SET  BookName = '$myBookName' ,Version = '$myVersion',Author = '$myAuthor',Seller = '$mySeller',Price = '$myPrice' WHERE OrderID = '$myOrderID'");
+        $stmt = $db->query($query);
+        header("location: bookData.php?value=read");
+      } 
+      else
       {
-        $$myVersion = $result[0][2];
+        $query = "insert into bookinfo values ('$myOrderID','$myBookName','$myVersion','$myAuthor','$mySeller','$myPrice','$myDept')";
+        $stmt = $db->query($query);
       }
-      if(!$myAuthor)
-      {
-        $myAuthor = $result[0][3];
-      }
-      if(!$mySeller)
-      {
-        $mySeller = $result[0][4];
-      }
-      if(!$myPrice)
-      {
-        $myPrice = $result[0][5];
-      }
-      if(!$myDept)
-      {
-        $myDept = $result[0][6];
-      }
-      $query = ("update bookinfo SET  BookName = '$myBookName' ,Version = '$myVersion',Author = '$myAuthor',Seller = '$mySeller',Price = '$myPrice' WHERE OrderID = '$myOrderID'");
-	    $stmt = $db->query($query);
-    } 
-    else
-    {
-      $query = "insert into bookinfo values ('$myOrderID','$myBookName','$myVersion','$myAuthor','$mySeller','$myPrice','$myDept')";
-	    $stmt = $db->query($query);
-    }
+
+     }
   }
 ?>
 <!DOCTYPE html>
@@ -76,7 +88,7 @@
 				
 				<div class="navbar-collapse collapse" id="navbarText">
 				  <ul class="nav navbar-nav">
-            <li class="nav-item"><a class = "nav-link" href="member_information.php">會員資訊</a></li>
+            <li class="nav-item"><a class = "nav-link" href="memberData.php">會員資訊</a></li>
             <li class="nav-item"><a class = "nav-link" onclick="changePage()">訂購書籍資訊</a></li>         
                     
 					<li class="dropdown">
@@ -85,7 +97,9 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="change_password.php">修改密碼</a>
-						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
+						  <form method = 'post' action = ''>
+              <input type = submit class = 'dropdown-item' value = 登出></input>
+              </form>
 						</div>
 					</li>
 				  </ul>
@@ -106,7 +120,7 @@
             
             <div class="form-group row">
                 
-                <div class="col-xs-12 col-md-6 col-lg-6" id="member">
+                <div class="col-xs-12 col-md-6 col-lg-12" id="member">
             
                     <table class="table table-hover" id="memberTable">
                       <thead class="thead-dark">
@@ -132,14 +146,16 @@
                             {
                               echo "<form method = 'post' action = ''>";
                               echo "<tr>";
-                              echo "<td scope='col'><input type = text name = 'OrderID' placeholder = ".$result[$i][0]."></td>";
+                              echo "<td scope='col'>".$result[$i][0]."</td>";
                               echo "<td scope='col'><input type = text name = 'BookName' placeholder = ".$result[$i][1]."></td>";
                               echo "<td scope='col'><input type = text name = 'version' placeholder = ".$result[$i][2]."></td>";
                               echo "<td scope='col'><input type = text name = 'author' placeholder = ".$result[$i][3]."></td>";                              
                               echo "<td scope='col'><input type = text name = 'seller' placeholder = ".$result[$i][4]."></td>";
                               echo "<td scope='col'><input type = text name = 'price' placeholder = ".$result[$i][5]."></td>";
                               echo "<td scope='col'><input type = text name = 'dept' placeholder = ".$result[$i][6]."></td>";
-                              echo "<td scope='col'><input type='submit' class='btn btn-success btn-lg float-right' id='btnSave'</td>";                               
+                              echo "</tr>";
+                              echo "<tr>";
+                              echo "<td scope='col'><input type='submit' class='btn btn-success btn-lg float-right' id='btnSave' value = '儲存'></td>";                               
                               echo "</tr>";                                                    
                               echo "</form>";
                             }

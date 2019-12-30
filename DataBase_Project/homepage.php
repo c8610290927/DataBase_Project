@@ -1,3 +1,11 @@
+<?php
+	session_start();
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		unset($_SESSION['username']);
+		session_destroy();
+		header("location: homepage.php");
+	}
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -19,7 +27,7 @@
 		?>
 	  	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="mainNav">
 			<div class="container">
-				  <a class="navbar-brand" href="index.php">海大班級訂書系統</a>
+				  <a class="navbar-brand" href="homepage.php">海大班級訂書系統</a>
 				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				  </button>
@@ -31,17 +39,42 @@
                     
 					<li class="dropdown">
 						<a class="nav-link active manager_name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
 						<img src="https://fashion.jedi.net.tw/images/user.png" width=30 height=30>
 						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="login.php">登入</a>
-						</div>
+						<?php						
+							if(isset($_SESSION['username']))
+							{
+								echo "<div class='dropdown-menu' aria-labelledby='navbarDropdown'>";
+								echo "<a class='dropdown-item' href='changePassword.php'>修改密碼</a>";
+								echo "<form method = 'post' action = ''>";
+								echo "<input type = submit class = 'dropdown-item' value = 登出></input>";
+								echo "</form>";
+								echo "</div>";
+							}
+							else
+							{
+								echo "<div class='dropdown-menu' aria-labelledby='navbarDropdown'>";
+								echo "<a class='dropdown-item' href='login.php'>登入</a>";
+								echo "</div>";
+							}
+						?>
 					</li>
 				  </ul>
 				</div>
 			</div>
-	    </nav>
-		<p align="center"><center>歡迎來到此系統，請由下拉式選單登入後進行操作</center></p>
+		</nav>
+		<?php						
+			if(!isset($_SESSION['username']))
+			{
+				echo "<p align='center'><center>歡迎來到此系統，請由下拉式選單登入後進行操作</center></p>";
+			}
+			else
+			{
+				echo "<p align='center'><center>歡迎來到此系統</center></p>";
+			}
+		?>
+		
 	</body>
 	<script>
             function changePage()

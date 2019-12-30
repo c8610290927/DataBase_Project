@@ -2,9 +2,15 @@
 <?php
     include("db_finalproject_conn.php");
     session_start();
+    $error = "";    
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         // username and password sent from form 
-        
+        if(!isset($_POST['oldpwd']))
+        {
+            unset($_SESSION['username']);
+            session_destroy();
+            header("location: homepage.php");
+        }
         $myusername = $_SESSION['username'];
         $mypassword = $_POST['oldpwd']; 
         $newpassword1 = $_POST['newpwd1'];
@@ -65,7 +71,9 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="changePassword.php">修改密碼</a>
-						  <a class="dropdown-item" href="{{url_for('logout')}}">登出</a>
+						  <form method = 'post' action = ''>
+                          <input type = submit class = 'dropdown-item' value = 登出></input>
+                          </form>
 						</div>
 					</li>
 				</ul>
@@ -101,7 +109,7 @@
                                             <label>新密碼確認(Confirm Password)</label>
                                             <input type="password" class="form-control form-control-lg rounded-0" name= "newpwd2" id="pwd2" required>
                                         </div>
-                                        <input type="submit" class="btn btn-success btn-lg float-right" id="btnSave">確認</button>
+                                        <input type="submit" class="btn btn-success btn-lg float-right" id="btnSave"></button>
                                     </div>
                                 </form>
                                 <div style = "font-size:11px; color:#cc0000; margin-top:10px">

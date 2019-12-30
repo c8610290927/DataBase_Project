@@ -15,8 +15,7 @@
 		
       if(!empty($result[0])) {
          $_SESSION['username'] = $myusername;
-		 header("location: bookData.php");
-		 echo  $_SESSION['username'];
+		 header("location: homepage.php");
       }else {
          $error = "Your UserName or Password is invalid";
       }
